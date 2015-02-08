@@ -1,10 +1,20 @@
 <?php
 
+/*
+ * This file is part of the HadesArchitect Notification bundle
+ *
+ * (c) Aleksandr Volochnev <a.volochnev@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace HadesArchitect\NotificationBundle\Handler;
 
 use HadesArchitect\NotificationBundle\Channel\NotificationChannelInterface;
 use HadesArchitect\NotificationBundle\Exception\TemplatingException;
 use HadesArchitect\NotificationBundle\Notification\Notification;
+use HadesArchitect\NotificationBundle\Notification\NotificationInterface;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -30,16 +40,25 @@ class BaseHandler implements HandlerInterface
      */
     protected $receiver;
 
+    /**
+     * @inheritdoc
+     */
     function setTemplatingEngine(EngineInterface $engine)
     {
         $this->templatingEngine = $engine;
     }
 
+    /**
+     * @inheritdoc
+     */
     function setChannel(NotificationChannelInterface $channel)
     {
         $this->channel = $channel;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function setTemplateName($templateName)
     {
         if (null === $this->templatingEngine) {
@@ -53,11 +72,17 @@ class BaseHandler implements HandlerInterface
         $this->templateName = $templateName;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function setReceiver($receiver)
     {
         $this->receiver = $receiver;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function onEvent(Event $event, $eventName)
     {
         $view = $this->templatingEngine->render(
@@ -71,6 +96,11 @@ class BaseHandler implements HandlerInterface
         $this->channel->send($this->getNotification($view));
     }
 
+    /**
+     * @param string $body
+     *
+     * @return NotificationInterface
+     */
     protected function getNotification($body)
     {
         $notification = new Notification();
