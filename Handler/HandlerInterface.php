@@ -14,7 +14,7 @@ interface HandlerInterface
 
     function setChannel(NotificationChannelInterface $channel);
 
-    function setReceiver(array $receiver);
+    function setReceiver($receiver);
 
-    function onEvent(Event $event);
+    function onEvent(Event $event, $eventName);
 }

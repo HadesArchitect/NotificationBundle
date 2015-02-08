@@ -3,10 +3,12 @@
 namespace HadesArchitect\NotificationBundle\Handler;
 
 use HadesArchitect\NotificationBundle\Channel\NotificationChannelInterface;
+use HadesArchitect\NotificationBundle\Exception\TemplatingException;
+use HadesArchitect\NotificationBundle\Notification\Notification;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Templating\EngineInterface;
 
-abstract class BaseHandler implements HandlerInterface
+class BaseHandler implements HandlerInterface
 {
     /**
      * @var EngineInterface
@@ -26,7 +28,7 @@ abstract class BaseHandler implements HandlerInterface
     /**
      * @var array
      */
-    protected $receiver = array();
+    protected $receiver;
 
     function setTemplatingEngine(EngineInterface $engine)
     {
@@ -40,13 +42,43 @@ abstract class BaseHandler implements HandlerInterface
 
     public function setTemplateName($templateName)
     {
+        if (null === $this->templatingEngine) {
+            throw new TemplatingException('Set template engine first');
+        }
+
+        if (!$this->templatingEngine->supports($templateName)) {
+            throw new TemplatingException(sprintf('Template %s is not supported by templating engine', $templateName));
+        }
+
         $this->templateName = $templateName;
     }
 
-    public function setReceiver(array $receiver)
+    public function setReceiver($receiver)
     {
         $this->receiver = $receiver;
     }
 
-    abstract public function onEvent(Event $event);
+    public function onEvent(Event $event, $eventName)
+    {
+        $view = $this->templatingEngine->render(
+            $this->templateName, array(
+                'event_name' => $eventName,
+                'event'      => $event,
+                'receiver'   => $this->receiver
+            )
+        );
+
+        $this->channel->send($this->getNotification($view));
+    }
+
+    protected function getNotification($body)
+    {
+        $notification = new Notification();
+
+        $notification
+            ->setReceiver($this->receiver)
+            ->setBody($body);
+
+        return $notification;
+    }
 }
