@@ -4,15 +4,15 @@
         <body>
             <trans-unit id="1">
                 <source>Notification</source>
-                <target>Notification</target>
+                <target>Mitteilung</target>
             </trans-unit>
             <trans-unit id="2">
                 <source>Event occurred</source>
-                <target>Event occurred</target>
+                <target>Ereignis eingetreten ist</target>
             </trans-unit>
             <trans-unit id="3">
                 <source>Occurred at</source>
-                <target>Occurred at</target>
+                <target>Zeit</target>
             </trans-unit>
         </body>
     </file>
