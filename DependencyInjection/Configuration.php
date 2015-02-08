@@ -18,11 +18,28 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('hades_architect_notification');
+        $rootNode = $treeBuilder->root('ha_notification');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->scalarNode('default_channel')->cannotBeEmpty()->isRequired()->end()
+                ->arrayNode('handlers')
+                    ->isRequired()
+                    ->requiresAtLeastOneElement()
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('event')->isRequired()->end()
+                            ->scalarNode('template')->defaultValue('%ha_notification.view.default_template%')->end()
+                            ->scalarNode('templating')->defaultValue('@templating')->end()
+                            ->scalarNode('handler_class')->defaultValue('%ha_notification.handler.default_class%')->end()
+                            ->scalarNode('channel')->defaultValue('@ha_notification.channel')->end()
+                            ->variableNode('receiver')->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }
