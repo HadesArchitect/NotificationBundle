@@ -2,7 +2,7 @@
 
 namespace HadesArchitect\NotificationBundle\Exception;
 
-class UnsupportedTemplateException extends NotificationException
+class TemplatingException extends NotificationException
 {
 
 }
