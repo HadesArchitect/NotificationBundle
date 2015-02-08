@@ -12,6 +12,7 @@
 namespace HadesArchitect\NotificationBundle\Handler;
 
 use HadesArchitect\NotificationBundle\Channel\NotificationChannelInterface;
+use HadesArchitect\NotificationBundle\Exception\ChannelException;
 use HadesArchitect\NotificationBundle\Exception\TemplatingException;
 use HadesArchitect\NotificationBundle\Notification\Notification;
 use HadesArchitect\NotificationBundle\Notification\NotificationInterface;
@@ -93,7 +94,11 @@ class BaseHandler implements HandlerInterface
             )
         );
 
-        $this->channel->send($this->getNotification($view));
+        try {
+            $this->channel->send($this->getNotification($view));
+        } catch (\Exception $exception) {
+            throw new ChannelException('Exception was caught during notification sending', 0, $exception);
+        }
     }
 
     /**
