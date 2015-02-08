@@ -1,5 +1,10 @@
 parameters:
 
-    ha_notification.handler.default_class: HadesArchitect\NotificationBundle\Handler\DefaultHandler
-    ha_notification.view.default_template: HadesArchitectNotificationBundle:Email:debug.html.twig
-    ha_notification.channel.echo_class:    HadesArchitect\NotificationBundle\Channel\EchoChannel
+    ha_notification.handler.default_class:     HadesArchitect\NotificationBundle\Handler\SubjectAwareHandler
+
+    ha_notification.view.default_template:     HadesArchitectNotificationBundle:Email:default.html.twig
+
+    ha_notification.default_subject:           Notification
+
+    ha_notification.channel.echo_class:        HadesArchitect\NotificationBundle\Channel\EchoChannel
+    ha_notification.channel.swiftmailer_class: HadesArchitect\NotificationBundle\Channel\SwiftmailerChannel

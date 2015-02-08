@@ -2,3 +2,8 @@ services:
 
     ha_notification.channel.echo:
         class: %ha_notification.channel.echo_class%
+
+    ha_notification.channel.swiftmailer:
+        class: %ha_notification.channel.swiftmailer_class%
+        arguments:
+            - @swiftmailer.mailer
