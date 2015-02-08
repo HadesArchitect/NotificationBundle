@@ -2,10 +2,12 @@
 
 namespace HadesArchitect\NotificationBundle\Channel;
 
+use HadesArchitect\NotificationBundle\Notification\NotificationInterface;
+
 class EchoChannel implements NotificationChannelInterface
 {
-    public function send(array $receiver, $data)
+    public function send(NotificationInterface $notification)
     {
-        echo $data;
+        echo $notification->getBody();
     }
 }

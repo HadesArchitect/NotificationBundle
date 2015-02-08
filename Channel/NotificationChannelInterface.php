@@ -2,7 +2,9 @@
 
 namespace HadesArchitect\NotificationBundle\Channel;
 
+use HadesArchitect\NotificationBundle\Notification\NotificationInterface;
+
 interface NotificationChannelInterface
 {
-    function send(array $receiver, $data);
+    function send(NotificationInterface $notification);
 }
