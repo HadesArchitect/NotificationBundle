@@ -4,7 +4,7 @@
 [![Latest Stable Version](https://poser.pugx.org/hadesarchitect/notification-bundle/v/stable.svg)](https://packagist.org/packages/hadesarchitect/notification-bundle)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d3944cb9-a6d7-493f-b8c7-4b288e633d1a/mini.png)](https://insight.sensiolabs.com/projects/d3944cb9-a6d7-493f-b8c7-4b288e633d1a)
 
-Event-driven notification bundle for Symfony 2 environment. Provides convenient way to manage user notifications in applications, for example to warn administrators about important events like user registration or notify users about any significant things for them like 'you order has been sent'. At that moment supports only swiftmailer as a notification channel, but it could be easily extended. Visual part could be rendered by any supported template engine like twig.  
+Event-driven notification bundle for Symfony 2 environment. Provides convenient way to manage user notifications in applications, for example to warn administrators about important events like user registration or notify users about any significant things for them like 'your order has been sent'. At that moment supports only swiftmailer as a notification channel, but it could be easily extended. Visual part could be rendered by any supported template engine like twig.  
 
 ## Installation
 
