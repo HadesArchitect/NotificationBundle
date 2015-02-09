@@ -48,4 +48,47 @@ class BaseHandlerTest extends \PHPUnit_Framework_TestCase
         $this->handler->setTemplatingEngine($stub);
         $this->handler->setTemplateName('123');
     }
+
+    public function testChannelNotSetFail()
+    {
+        $this->setExpectedException('\HadesArchitect\NotificationBundle\Exception\ChannelException');
+
+        $templatingStub = $this->getMock('\Symfony\Component\Templating\EngineInterface');
+
+        $templatingStub->method('supports')
+            ->willReturn(true);
+        $templatingStub->method('render')
+            ->willReturn('100500');
+
+        $this->handler->setTemplatingEngine($templatingStub);
+        $this->handler->setTemplateName('123');
+
+        $eventStub = $this->getMock('\Symfony\Component\EventDispatcher\Event');
+
+        $this->handler->onEvent($eventStub, 'event_name');
+    }
+
+    public function testEventSuccess()
+    {
+        $templatingStub = $this->getMock('\Symfony\Component\Templating\EngineInterface');
+
+        $templatingStub->method('supports')
+            ->willReturn(true);
+        $templatingStub->method('render')
+            ->willReturn('100500');
+
+        $this->handler->setTemplatingEngine($templatingStub);
+        $this->handler->setTemplateName('123');
+
+        $eventStub = $this->getMock('\Symfony\Component\EventDispatcher\Event');
+
+        $channelStub = $this->getMock('\HadesArchitect\NotificationBundle\Channel\NotificationChannelInterface');
+
+        $channelStub->expects($this->once())
+            ->method('send');
+
+        $this->handler->setChannel($channelStub);
+
+        $this->handler->onEvent($eventStub, 'event_name');
+    }
 }
