@@ -13,6 +13,7 @@ namespace HadesArchitect\NotificationBundle\Handler;
 
 use HadesArchitect\NotificationBundle\Channel\NotificationChannelInterface;
 use HadesArchitect\NotificationBundle\Exception\ChannelException;
+use HadesArchitect\NotificationBundle\Exception\TemplateNotSupportedException;
 use HadesArchitect\NotificationBundle\Exception\TemplatingException;
 use HadesArchitect\NotificationBundle\Notification\Notification;
 use HadesArchitect\NotificationBundle\Notification\NotificationInterface;
@@ -67,7 +68,7 @@ class BaseHandler implements HandlerInterface
         }
 
         if (!$this->templatingEngine->supports($templateName)) {
-            throw new TemplatingException(sprintf('Template %s is not supported by templating engine', $templateName));
+            throw new TemplateNotSupportedException(sprintf('Template %s is not supported by templating engine', $templateName));
         }
 
         $this->templateName = $templateName;
