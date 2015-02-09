@@ -112,5 +112,6 @@ Parameters which you could override:
 
 * Describe ways to extend bundle
 * Add more tests
+* Add possibility to dinamically determine receiver's address
 * Add possibility to throw notifications directly, not only through event handlers  
 * Add possibility to bypass any services and parameters to templates, instead of using twig globals
