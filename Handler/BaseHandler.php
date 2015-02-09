@@ -87,6 +87,10 @@ class BaseHandler implements HandlerInterface
      */
     public function onEvent(Event $event, $eventName)
     {
+        if (null === $this->channel) {
+            throw new ChannelException('Handler is not ready, channel not set');
+        }
+
         $view = $this->templatingEngine->render(
             $this->templateName, array(
                 'event_name' => $eventName,
